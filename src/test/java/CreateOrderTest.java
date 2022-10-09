@@ -1,7 +1,11 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,14 +15,12 @@ import model.DeliverPageWhoIsScooterFor;
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
     //на хроме тест падает
-    private FirefoxDriver driverFirefox;
-    private ChromeDriver driver;
-    //Модальное окно Заказ оформлен
-
-    private String firstName;
-    private String lastName;
-    private String deliverAddress;
-    private String phoneNumber;
+    WebDriver driver;
+    private final static String URL = "https://qa-scooter.praktikum-services.ru/";
+    private final String firstName;
+    private final String lastName;
+    private final String deliverAddress;
+    private final String phoneNumber;
 
     public CreateOrderTest(String firstName, String lastName, String deliverAddress, String phoneNumber) {
         this.firstName = firstName;
@@ -35,13 +37,18 @@ public class CreateOrderTest {
         };
     }
 
-    @Test
-    public void createOrdersWithDifferentDataChromeTest() {
-        System.setProperty("webdriver.chrome.driver", "C:\\WebDriver\\bin\\chromedriver.exe");
-        ChromeDriver driver = new ChromeDriver();
-        driver.get("https://qa-scooter.praktikum-services.ru/");
+    @Before
+    public void setUp() {
+        //WebDriverManager.chromedriver().setup();
+        //driver = new ChromeDriver();
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+        driver.get(URL);
         new WebDriverWait(driver, 3);
+    }
 
+    @Test
+    public void createOrdersByPushHeaderButton() {
         DeliverPageWhoIsScooterFor orderFirstPage = new DeliverPageWhoIsScooterFor(driver);
         orderFirstPage.headerOrderButtonClick();
         orderFirstPage.firstNameSendKeys(firstName);
@@ -51,33 +58,21 @@ public class CreateOrderTest {
         orderFirstPage.phoneNumberSendKeys(phoneNumber);
         orderFirstPage.nextButtonClick();
 
-        new WebDriverWait(driver, 2);
-
         DeliverPageAboutRent orderSecondPage = new DeliverPageAboutRent(driver);
         orderSecondPage.chooseDeliverDate();
-        new WebDriverWait(driver, 2);
         orderSecondPage.chooseDeliverDate();
         orderSecondPage.chooseDurationOfDays();
-        orderSecondPage.middleOrderButtonCLick();
+        orderSecondPage.secondOrderButtonCLick();
         orderSecondPage.confirmOrderClick();
 
         //Проверяется наличие кнопки Посмотреть статус после завершения заказа
         driver.findElement(By.xpath("//div[@class='Order_NextButton__1_rCA']/button[text()='Посмотреть статус']")).isDisplayed();
-
-        driver.quit();
-
     }
 
-
     @Test
-    public void createOrdersWithDifferentDataFirefoxTest() {
-        System.setProperty("webdriver.gecko.driver", "C:\\WebDriver\\bin\\firefoxDriver\\geckodriver.exe");
-        driverFirefox = new FirefoxDriver();
-        driverFirefox.get("https://qa-scooter.praktikum-services.ru/");
-        new WebDriverWait(driverFirefox, 3);
-
-        DeliverPageWhoIsScooterFor orderFirstPage = new DeliverPageWhoIsScooterFor(driverFirefox);
-        orderFirstPage.headerOrderButtonClick();
+    public void createOrdersByPushMiddleButton() {
+        DeliverPageWhoIsScooterFor orderFirstPage = new DeliverPageWhoIsScooterFor(driver);
+        orderFirstPage.middleOrderButtonClick();
         orderFirstPage.firstNameSendKeys(firstName);
         orderFirstPage.lastNameSendKeys(lastName);
         orderFirstPage.deliverAddressSendKeys(deliverAddress);
@@ -85,19 +80,20 @@ public class CreateOrderTest {
         orderFirstPage.phoneNumberSendKeys(phoneNumber);
         orderFirstPage.nextButtonClick();
 
-        new WebDriverWait(driverFirefox, 2);
-
-        DeliverPageAboutRent orderSecondPage = new DeliverPageAboutRent(driverFirefox);
+        DeliverPageAboutRent orderSecondPage = new DeliverPageAboutRent(driver);
         orderSecondPage.chooseDeliverDate();
-        new WebDriverWait(driverFirefox, 2);
         orderSecondPage.chooseDeliverDate();
         orderSecondPage.chooseDurationOfDays();
-        orderSecondPage.middleOrderButtonCLick();
+        orderSecondPage.secondOrderButtonCLick();
         orderSecondPage.confirmOrderClick();
 
         //Проверяется наличие кнопки Посмотреть статус после завершения заказа
-        driverFirefox.findElement(By.xpath("//div[@class='Order_NextButton__1_rCA']/button[text()='Посмотреть статус']")).isDisplayed();
-
-        driverFirefox.quit();
+        driver.findElement(By.xpath("//div[@class='Order_NextButton__1_rCA']/button[text()='Посмотреть статус']")).isDisplayed();
     }
+
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
+
 }

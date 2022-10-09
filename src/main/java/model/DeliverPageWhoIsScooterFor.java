@@ -1,15 +1,14 @@
 package model;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DeliverPageWhoIsScooterFor {
     private WebDriver driver;
-    //Кнопка "Заказать"
+    //Кнопка "Заказать" в хэдэре
     private final static By HEADER_ORDER_BUTTON = By.xpath("//div[@class='Header_Nav__AGCXC']/button[@class='Button_Button__ra12g']");
-
+    //Кнопка "Заказать" в середине страницы
+    private final static By MIDDLE_ORDER_BUTTON = By.xpath("//div[@class='Home_FinishButton__1_cWm']/button");
     //Поле "Имя"
     private final static By FIRST_NAME = By.xpath("//input[@placeholder='* Имя']");
 
@@ -32,6 +31,12 @@ public class DeliverPageWhoIsScooterFor {
 
     public void headerOrderButtonClick() {
         driver.findElement(HEADER_ORDER_BUTTON).click();
+    }
+
+    public void middleOrderButtonClick() {
+        WebElement element = driver.findElement(MIDDLE_ORDER_BUTTON);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        element.click();
     }
 
     public void firstNameSendKeys(String firstName) {

@@ -17,12 +17,13 @@ public class CheckAnswersRightTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get(URL);
+        MainPage mainPage = new MainPage(driver);
+        mainPage.cookieConfirmButtonClick();
     }
 
     @Test
     public void correspondingFirstTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theFirstQuestionClick();
         MatcherAssert.assertThat(mainPage.theFirstAnswerText(), is("Сутки — 400 рублей. Оплата курьеру — наличными или картой."));
     }
@@ -30,7 +31,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingSecondTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theSecondQuestionClick();
         MatcherAssert.assertThat(mainPage.theSecondAnswerText(), is("Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."));
     }
@@ -38,7 +38,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingThirdTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theThirdQuestionClick();
         MatcherAssert.assertThat(mainPage.theThirdAnswerText(), is("Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."));
     }
@@ -46,7 +45,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingFourthTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theFourthQuestionClick();
         MatcherAssert.assertThat(mainPage.theFourthAnswerText(), is("Только начиная с завтрашнего дня. Но скоро станем расторопнее."));
     }
@@ -54,7 +52,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingFifthTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theFifthQuestionClick();
         MatcherAssert.assertThat(mainPage.theFifthAnswerText(), is("Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010."));
     }
@@ -62,7 +59,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingSixthTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theSixthQuestionClick();
         MatcherAssert.assertThat(mainPage.theSixthAnswerText(), is("Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится."));
     }
@@ -70,7 +66,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingSeventhTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theSeventhQuestionClick();
         MatcherAssert.assertThat(mainPage.theSeventhAnswerText(), is("Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои."));
     }
@@ -78,7 +73,6 @@ public class CheckAnswersRightTest {
     @Test
     public void correspondingEighthTextOpensAfterClick() {
         MainPage mainPage = new MainPage(driver);
-        mainPage.cookieConfirmButtonClick();
         mainPage.theEighthQuestionClick();
         MatcherAssert.assertThat(mainPage.theEighthAnswerText(), is("Да, обязательно. Всем самокатов! И Москве, и Московской области."));
     }

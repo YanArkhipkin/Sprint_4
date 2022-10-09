@@ -16,7 +16,7 @@ public class DeliverPageAboutRent {
     private final static By CHOOSE_DURATION_OF_DAYS = By.xpath("//div[@class=\"Dropdown-menu\"]/div[text()='двое суток']");
 
     //Кнопка "Заказать"
-    private final static By MIDDLE_ORDER_BUTTON = By.xpath("//div[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
+    private final static By SECOND_ORDER_BUTTON = By.xpath("//div[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
 
     //Кнопка "Да"
     private final static By CONFIRM_ORDER = By.xpath("//div[@class='Order_Buttons__1xGrp']/button[text()='Да']");
@@ -38,8 +38,8 @@ public class DeliverPageAboutRent {
         driver.findElement(CHOOSE_DURATION_OF_DAYS).click();
     }
 
-    public void middleOrderButtonCLick() {
-        driver.findElement(MIDDLE_ORDER_BUTTON).click();
+    public void secondOrderButtonCLick() {
+        driver.findElement(SECOND_ORDER_BUTTON).click();
     }
 
     public void confirmOrderClick() {
